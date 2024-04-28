@@ -1,0 +1,30 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+  
+.container {
+    flex-direction: column;
+    width: 100vw; /* 100% of the viewport width */
+    height: 100vh; /* 100% of the viewport height */
+    background-color: #212121;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    /* Add other styles as needed */
+}
+
+.form {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    background-color: gray;
+    border: 1px solid green;
+    border-radius: 10px;
+    padding: 10px;
+    gap: 10px;
+}
