@@ -11,6 +11,12 @@ const app = express(); // Creating express app
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
 
+var selectedAccount = '';
+var Registered_User_Details = {
+    user_pub_key: '',
+    Transaction_Hashes: []
+}
+
 const Groups = [
     {
         name: '',
@@ -18,14 +24,23 @@ const Groups = [
         prv_key: '',
         pub_key: '',
         owner: '',
+        system_account: '',
         members: []
     }
 ]
 
 app.post('/register', async (req, res) => {
     const data = req.body.data;
-    console.log("User Regustered with Public Key: ", data)
-    res.send('Data received');
+    console.log("System & registered User's Keys: ", data)
+    selectedAccount = data.user;
+    Registered_User_Details.user_pub_key = data.user;
+    Registered_User_Details.Transaction_Hashes.push(data.txHash);
+    console.log("Registered User's Details: ", Registered_User_Details)
+    res.send('Accounts received');
+})
+
+app.get('/getUser', async (req, res) => {
+    res.send(selectedAccount);
 })
 
 // Function to create IPFS client

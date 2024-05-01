@@ -2,29 +2,49 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-}
+  }
   
 .container {
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
     width: 100vw; /* 100% of the viewport width */
     height: 100vh; /* 100% of the viewport height */
     background-color: #212121;
     text-align: center;
-    display: flex;
     justify-content: center;
     align-items: center;
     color: white;
     /* Add other styles as needed */
 }
-
-.form {
-    display: flex;
+  
+  .input-field {
     width: 100%;
-    flex-direction: row;
-    justify-content: center;
-    background-color: gray;
-    border: 1px solid green;
-    border-radius: 10px;
     padding: 10px;
-    gap: 10px;
-}
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .submit-button {
+    width: max-content;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  #details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
