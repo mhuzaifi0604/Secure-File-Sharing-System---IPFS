@@ -5,40 +5,43 @@ html, body {
   }
   
 .container {
+  display: flex;
+  flex-direction: column;
     width: 100vw; /* 100% of the viewport width */
     height: 100vh; /* 100% of the viewport height */
     background-color: #212121;
     text-align: center;
-    place-content: center;
+    justify-content: center;
+    align-items: center;
     color: white;
     /* Add other styles as needed */
 }
-.form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+#form{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+textarea{
+ display: flex;
+ flex-wrap: wrap;
+ min-width: 50%;
+ min-height: 5%;
+ padding: 5px;
+ color: white;
+ font-size: 20px;
+}
+
+#submit-button:hover{
+  transform: scale(1.1);
+  transition: transform 3 ease-in;
+}
+#Acocunts{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
   
-.input-field {
-    width: 300px;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-  }
-  
-.submit-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-.submit-button:hover {
-    background-color: #0056b3;
-  } 
+}
