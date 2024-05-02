@@ -36,7 +36,7 @@ app.post('/register', async (req, res) => {
     Registered_User_Details.user_pub_key = data.user;
     Registered_User_Details.Transaction_Hashes.push(data.txHash);
     console.log("Registered User's Details: ", Registered_User_Details)
-    res.send('Accounts received');
+    res.status(200).send('Accounts received'); // 200 is the status code for OK
 })
 
 app.get('/getUser', async (req, res) => {
@@ -62,7 +62,7 @@ async function addTextToIPFS(ipfs_client, text){
 }
 
 async function addFileToIPFS(ipfs_client){
-    const file = fs.readFileSync('./package.json');
+    const file = fs.readFileSync('./Test.txt');
     const content = Buffer.from(file);
     const result = await ipfs_client.add(content);
     return result;
