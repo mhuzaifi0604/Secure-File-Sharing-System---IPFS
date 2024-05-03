@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import './Upload.css'; // Import your CSS file for styling
+import { useNavigate } from 'react-router-dom';
 import {ethers} from 'ethers'
 import axios from 'axios';
+import '../Styles/Uploads.css'
 
 const Upload = () => {
-  const [user, setUser] = useState(''); // State to store user data
+  const navigate = useNavigate();
+  const [accounts_info, setaccounts_info] = useState({}); // State to store user data
+  const [group_details, set_group_details] = useState({}); // State to store group data
   const [balance, setbalance] = useState('');
   const [formData, setFormData] = useState({
     group_name: '',
@@ -15,8 +18,8 @@ const Upload = () => {
     // Fetch data from API
     axios.get('http://localhost:3000/getUser')
     .then(response => {
-      setUser(response.data)
-      window.ethereum.request({method: 'eth_getBalance', params: [String(response.data), 'latest']})
+      setaccounts_info(response.data)
+      window.ethereum.request({method: 'eth_getBalance', params: [String(response.data.useraccount), 'latest']})
       .then(balance => {
         setbalance(ethers.formatEther(balance))
       })
@@ -39,15 +42,21 @@ const Upload = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here, e.g., send data to server
-    console.log('Form submitted:', formData);
+    axios.post('http://localhost:3000/createGroup', {data: {group_details: formData, accounts_info: accounts_info}})
+    .then(response => {
+      set_group_details(response.data.Group)
+      navigate(`/groups/${response.data.Group.name}`, {state: {group: response.data.Group}})
+    })
+    .catch(error => {
+      console.log("Error Creating Group: ", error)
+    })
   };
 
   return (
     <div className="container">
       <div id='details'>
         <h1>User Details</h1>
-        <p><strong>Account Id:</strong> {user}</p>
+        <p><strong>Account Id:</strong> {accounts_info.useraccount}</p>
         <p><strong>Balance:</strong> {balance}</p>
 
       </div>

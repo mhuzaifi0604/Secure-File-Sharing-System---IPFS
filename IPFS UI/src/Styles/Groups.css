@@ -1,0 +1,77 @@
+.container {
+  background-color: lightcyan;
+  color: black;
+}
+
+h1, .selectedfiles{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, #ff0000, #0000ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 20px;
+  font-family: cursive;
+
+}
+.selectedfiles{
+  font: 10px
+}
+.fileuploadform{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.input-file {
+  display: none; /* Hide default file input */
+}
+
+.file-label {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.file-label:hover {
+  background-color: #45a049; /* Darker shade on hover */
+}
+
+.upload-button {
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+}
+
+.upload-button:hover {
+  background-color: #005f77; /* Darker shade on hover */
+}
+.filenames{
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+}
+.removeFiles{
+  width: fit-content;
+  height: fit-content;
+  background-color: transparent;
+  padding: 0px;
+  border: none;
+  color: white;
+}
+.removeFiles:hover{
+  scale: 1.2;
+}

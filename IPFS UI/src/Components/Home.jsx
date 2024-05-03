@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react'
 import {IPFS} from '../context/IPFScontext'
 import { useNavigate } from 'react-router-dom'
 import { ethers } from 'ethers'
-import './Home.css'
+import '../Styles/Home.css'
 import axios from 'axios'
 
 const Home = () => {
@@ -22,9 +22,7 @@ const Home = () => {
         data: {user: inputValue, system: systemaccount, txHash: txHash}
       }).then(response => {
         console.log("User Registered Successfully: ", response.data)
-        setTimeout(() => {
-          navigate('/upload')
-        }, 3000);
+        navigate('/upload')
       }).catch(err => {
         console.log("Error Registering User: ", err)
       })
