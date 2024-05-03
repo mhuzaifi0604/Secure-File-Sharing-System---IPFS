@@ -36,7 +36,12 @@ contract IPFS {
 
         // Log the transaction hash
         registeredUsers[registeredUsers.length - 1].transactions.push(blockhash(block.number));
+        
 
         emit Register(msg.sender, _to, _amount, block.timestamp);
+    }
+
+    function getRegisteredUsers() external view returns (Registered_User[] memory) {
+        return registeredUsers;
     }
 }
