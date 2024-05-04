@@ -48,3 +48,24 @@ html, body {
     justify-content: center;
     align-items: center;
   }
+  .existing_group_details{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+  }
+  #existing_groups{
+    width: 45%;
+    height: max-content;
+    padding: 2px;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 15px;
+    font-family: cursive;
+    font-weight: bold;
+  }

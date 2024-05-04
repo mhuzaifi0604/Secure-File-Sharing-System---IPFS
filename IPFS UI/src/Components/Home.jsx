@@ -17,7 +17,7 @@ const Home = () => {
       if(!approve){
         return
       }else if(approve){
-        RegisterUser()
+        // RegisterUser()
         axios.post('http://localhost:3000/register', {
         data: {user: inputValue, system: systemaccount, txHash: txHash}
       }).then(response => {
