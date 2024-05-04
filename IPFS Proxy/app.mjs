@@ -73,6 +73,25 @@ app.post ('/createGroup', async (req, res) => {
     res.status(200).send({Message: 'Group Created', Group: Groups.find(group => group.name === data.group_details.group_name)}); // sending group index to the client
 })
 
+// Function to return Groups of a specific user
+app.get('/returnExistingGroups', async (req, res) => {
+    try {
+        const useraccount = req.query.useraccount;
+        console.log("User's Account: ", useraccount)
+        let userGroups = [];
+        for (let i =0 ; i < Groups.length; i++){
+            if (Groups[i].owner === useraccount){
+                console.log(`Group ${i}: `, Groups[i].name)
+                userGroups.push(Groups[i]);
+            }
+        }
+        res.status(200).send({Groups: userGroups}); // sending group index to the client
+    } catch (error) {
+        console.log("Error Returning Group: ", error)
+        res.status(500).send({Message: 'Error Returning Group'}); // sending group index to the client
+    }
+    
+})
 // Function to Upload Files to IPFS and add it to the group
 app.post('/uploadFiles', async (req, res) => {
     const data = req.body.data;
@@ -89,7 +108,7 @@ app.post('/uploadFiles', async (req, res) => {
         }
         console.log("Files Uploaded Successfull.")
         console.log("Updated Group Details: ", Groups.find(group => group.name === data.groupname))
-        res.status(200).send({Message: 'Files Uploaded'}); // sending group index to the client
+        res.status(200).send({ Message: 'Files Uploaded', Files: Groups.find(group => group.name === data.groupname)?.Files || [] });// sending group index to the client
     } catch (error) {
         console.log("Error Uploading Files: ", error)
         res.status(500).send({Message: 'Error Uploading Files'}); // sending group index to the client

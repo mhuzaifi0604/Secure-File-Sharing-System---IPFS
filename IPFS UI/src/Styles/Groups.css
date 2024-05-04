@@ -57,9 +57,10 @@ h1, .selectedfiles{
   background-color: #005f77; /* Darker shade on hover */
 }
 .filenames{
+  width: max-content;
   justify-content: center;
   align-items: center;
-  padding: 2px;
+  padding: 4px;
   border-radius: 5px;
   background-color: #4CAF50;
   color: white;
@@ -74,4 +75,15 @@ h1, .selectedfiles{
 }
 .removeFiles:hover{
   scale: 1.2;
+}
+.description{
+  font-family: cursive;
+}
+.sharedFiles{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
 }
