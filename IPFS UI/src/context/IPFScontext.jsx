@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback, useReducer} from 'react'
-import {ethers, parseEther} from 'ethers'
+import {decodeBytes32String, ethers, parseEther} from 'ethers'
 import Web3 from 'web3'
 // import IPFS from './Ethcontext'
 import {actions, reducer, initialState} from './state'
@@ -8,9 +8,9 @@ import { contractABI, contractAddress } from '../utils/constants'
 const {ethereum} = window
 export const IPFS = React.createContext();
 
-const getEthereumcontract = () => {
+const getEthereumcontract = async (account) => {
     const provider = new ethers.BrowserProvider(ethereum)
-    const signer =  provider.getSigner()
+    const signer =  await provider.getSigner()
     const ipfsContract = new ethers.Contract(contractAddress, contractABI, provider)
     
     return ipfsContract
@@ -21,57 +21,10 @@ export const IPFSProvider = ({children}) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // const init = useCallback(async artifact => {
-  //   if(artifact){
-  //     let web3;
-  //     if(window.web3){
-  //       web3 = new Web3(window.web3.currentProvider)
-  //     }else{
-  //       alert("Install MetaMask Please!!")
-  //     }
-  //     const accounts = await web3.eth.getAccounts()
-  //     const networkID = await web3.eth.net.getId()
-  //     const {abi} = artifact
-  //     let address, contract;
-  //     try {
-  //       address =  artifact.networks[networkID].address
-  //       contract = new web3.eth.Contract(abi, address)
-  //     } catch (error) {
-  //       console.log("Error initiating Blockchain: ", error)
-  //     }
-  //     dispatch({
-  //       type: actions.init,
-  //       data: {artifact, web3, accounts, networkID, contract}
-  //     })
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   const tryInit = async () => {
-  //     try {
-  //       const artifact = contractABI
-  //       init(artifact)
-  //     } catch (error) {
-  //       console.err("Error initiating Blockchain: ", error)
-  //     }
-  //   }
-  //   tryInit()
-  // }, [init])
-
-  // useEffect(() => {
-  //   const events= ['accountsChanged', 'chainChanged', 'disconnect']
-  //   const handleEvent = () => {
-  //     init(state.artifact)
-  //   }
-  //   events.forEach(event => window.ethereum.on(event, handleEvent));
-  //   return () => {
-  //     events.forEach(event => window.ethereum.removeListener(event, handleEvent))
-  //   }
-  // }, [init, state.artifact])
-
     const [accounts, setAccounts] = useState([])
     const [inputValue, setInputValue] = useState('')
     const [systemaccount, set_system_account] = useState('')
+    const [emitters, setEmitter] = useState(null)
     const [txHash, setTxHash] = useState('')
     const [loading, setloading] = useState(false)
 
@@ -89,31 +42,60 @@ export const IPFSProvider = ({children}) => {
       }
 
       const RegisterUser = async() => {
+        const web3 = new Web3(ethereum);
+        let decodedData;
         try {
             if(!ethereum){
                 return alert("Install MetaMask Please!!")   
             }
-            const ipfscontract = getEthereumcontract();
-            await ethereum.request({method: 'eth_sendTransaction', params: [{
-                from: inputValue,
-                to: systemaccount, 
-                // gas: BigInt("30000").toString(16),
-                // gasPrice: BigInt("5000000000").toString(16),
-                value: ethers.parseEther('1').toString(16)
-            }]
-            })
-            const transaction = await ipfscontract.registerUser.staticCall(systemaccount, parseEther("1.1"))
-            setloading(true)
-            console.log("Loading - Transaction Hash: ", transaction.hash)
-            setTxHash(transaction.hash)
-            const receipt = await transaction.wait()
-            setloading(false)
-            console.log("Success: ", receipt)
-            // const users = await ipfscontract.getRegisteredUsers()
-            // console.log("Users: ", users)
+
+            const data = web3.eth.abi.encodeFunctionCall({
+              name: 'registerUser',
+              type: 'function',
+              inputs: [{
+                type: 'address',
+                name: '_to'
+              }, {
+                type: 'uint256',
+                name: '_value'
+              }]
+            }, [inputValue, ethers.parseEther('1')]);
+
+            console.log("Data: ", data)
+          
+            const transaction = await ethereum.request({method: 'eth_sendTransaction', params: [{
+              from: inputValue,
+              to: contractAddress,
+              data: data,
+              value: ethers.parseEther('1').toString(16)
+          }]
+          })
+
+          const receipt = await web3.eth.getTransactionReceipt(transaction);
+          console.log("Reciept: ", receipt)
+
+          for (const item of contractABI) {
+            if (item.type === 'event') {
+                try {
+                    decodedData = await web3.eth.abi.decodeLog(
+                        item.inputs,
+                        receipt.logs[0].data,
+                        receipt.logs[0].topics.slice(1)
+                    );
+                    // Update the state with the decoded data
+                    setEmitter(decodedData);
+                    // Exit the loop after setting emitters
+                    break;
+                } catch (error) {
+                    console.log("Error Decoding Data: ", error);
+                }
+            }
+        }        
+            console.log("Loading - Transaction: ", transaction)
         } catch (error) {
             console.error("Error Sending Transaction: ", error)
         }
+        console.log("Decoded Data: ", decodedData)
       }
 
     return (
@@ -125,7 +107,7 @@ export const IPFSProvider = ({children}) => {
             systemaccount,
             set_system_account,
             txHash,
-            RegisterUser
+            RegisterUser,
             }}
         >
             {children}

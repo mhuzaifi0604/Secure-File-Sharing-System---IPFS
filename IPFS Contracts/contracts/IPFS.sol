@@ -5,7 +5,7 @@ contract IPFS {
     uint256 Registration;
     address payable public systemAccount;
 
-    event Register(address indexed sender, address receiver, uint256 amount, uint256 timestamp);
+    event Register(address indexed sender, address receiver, uint256 amount, uint256 timestamp , Registered_User[] registeredUsers);
 
     struct Groups {
         string name;
@@ -35,10 +35,10 @@ contract IPFS {
         payable(_to).transfer(_amount);
 
         // Log the transaction hash
+        registeredUsers[registeredUsers.length - 1].user = msg.sender;
         registeredUsers[registeredUsers.length - 1].transactions.push(blockhash(block.number));
         
-
-        emit Register(msg.sender, _to, _amount, block.timestamp);
+        emit Register(msg.sender, _to, _amount, block.timestamp, registeredUsers);
     }
 
     function getRegisteredUsers() external view returns (Registered_User[] memory) {
