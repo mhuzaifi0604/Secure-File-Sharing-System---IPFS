@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {IPFS} from '../context/IPFScontext'
 import { ethers } from 'ethers'
 import axios from 'axios';
 import '../Styles/Uploads.css'
 
 const Upload = () => {
+  const {ConnectWallet, accounts, inputValue, setInputValue, systemaccount, set_system_account, txHash, RegisterUser, emitters} = useContext(IPFS)
   const navigate = useNavigate();
   const [accounts_info, setaccounts_info] = useState({}); // State to store user data
   const [group_details, set_group_details] = useState({}); // State to store group data
@@ -110,6 +112,15 @@ const Upload = () => {
         />
         <button type="submit" className="submit-button">Submit</button>
       </form>
+      {emitters && 
+      <div>
+        Registered Users
+        {emitters.map((emitter, index) => {
+          return <p key={index}>{emitter}</p>
+        })
+        }
+      </div>
+      }
     </div>
   );
 };

@@ -6,7 +6,7 @@ import '../Styles/Home.css'
 import axios from 'axios'
 
 const Home = () => {
-  const {ConnectWallet, accounts, inputValue, setInputValue, systemaccount, set_system_account, txHash, RegisterUser} = useContext(IPFS)
+  const {ConnectWallet, accounts, inputValue, setInputValue, systemaccount, set_system_account, txHash, RegisterUser, emitters} = useContext(IPFS)
   const navigate = useNavigate();
   // const [accounts, setAccounts] = useState([])
   const [error, seterror] = useState('')
@@ -17,7 +17,7 @@ const Home = () => {
       if(!approve){
         return
       }else if(approve){
-        // RegisterUser()
+        RegisterUser()
         axios.post('http://localhost:3000/register', {
         data: {user: inputValue, system: systemaccount, txHash: txHash}
       }).then(response => {
