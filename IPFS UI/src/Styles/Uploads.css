@@ -2,6 +2,7 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
+    background-color: #212121;
   }
   
 .container {
@@ -9,7 +10,9 @@ html, body {
   flex-direction: column;
     width: 100vw; /* 100% of the viewport width */
     height: 100vh; /* 100% of the viewport height */
-    background-color: #212121;
+    background-image: url('https://static.vecteezy.com/system/resources/previews/006/188/153/non_2x/seamless-pattern-doodle-many-icons-of-books-scattered-background-for-education-elearning-school-concept-pile-of-paper-books-open-book-book-on-computer-screen-ebooks-glasses-heart-vector.jpg');
+    background-size: cover; 
+    background-position: center;
     text-align: center;
     justify-content: center;
     align-items: center;
@@ -18,15 +21,17 @@ html, body {
 }
   
   .input-field {
-    width: 100%;
+    display: block;
+    width: 80%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    color: white;
   }
   
-  .submit-button {
+  .submit {
     width: max-content;
     padding: 10px;
     background-color: #007bff;
@@ -36,9 +41,10 @@ html, body {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-bottom: 5px;
   }
   
-  .submit-button:hover {
+  .submit:hover {
     background-color: #0056b3;
   }
   
@@ -59,13 +65,14 @@ html, body {
     border: 1px solid #ccc;
   }
   #existing_groups{
-    width: 45%;
+    width: 82%;
     height: max-content;
     padding: 2px;
     border-radius: 5px;
-    background-color: #4CAF50;
+    background-color: #1f49a9;
     color: white;
     font-size: 15px;
     font-family: cursive;
     font-weight: bold;
+    margin-bottom: 10px;
   }
