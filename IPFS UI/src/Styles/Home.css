@@ -2,6 +2,9 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
+    background-image: url('https://www.shutterstock.com/image-vector/cyber-security-information-network-protection-600nw-653839552.jpg');
+    background-size: cover; 
+    background-position: center;
   }
   
 .container {
@@ -19,11 +22,19 @@ html, body {
 #form{
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: max-content;
+  padding: 10px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
+  background-color:#222222;
+  border-radius: 5px;
+  border: 2px solid #FFECD1;
+  box-shadow: 2px 2px 5px black;
+  z-index: 10;
+  opacity: 98%;
+  backdrop-filter: blur(10px);
 }
 textarea{
  display: flex;
@@ -35,7 +46,11 @@ textarea{
  font-size: 20px;
 }
 
-#submit-button:hover{
+.submit-button{
+  background-color: black;
+  border: 1px solid teal;
+}
+.submit-button:hover{
   transform: scale(1.1);
   transition: transform 3 ease-in;
 }
@@ -44,4 +59,18 @@ textarea{
   flex-direction: column;
   width: 50%;
   
+}
+#head{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 30px;
+  font-family: cursive;
+  margin-bottom: 10px;
+  height: max-content;
+  padding: 5px;
 }
